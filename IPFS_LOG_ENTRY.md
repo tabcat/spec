@@ -18,11 +18,10 @@ Besides references to previous entries, entries include other information:
 # Table of Contents
 
 - [Introduction](#introduction)
-- [Format](#format)
-- [Signature Verification](#signature-verification)
+- [Entry-Format](#entry-format)
+- [Signature Creation and Verification](#signature-creation-and-verification)
 - [Logical Clock](#logical-clock)
 - [Reference Fields](#reference-fields)
-- [Entry Length](#entry-length)
 
 ## Introduction
 
@@ -133,13 +132,6 @@ The length of an encoded entry with empty payload and reference fields is ~200 b
 
 Fields that can change in length include the clock, payload, and reference fields. Each CID added to a reference field would increase the length of the entry by ~40 bytes.
 
-## Logical Clock
-
-The **clock** field is used to add more richness to ordering the log. When creating new entries:
-
- - If no other entries are known to exist as part of the log, the entry.clock is set to 0.
- - If entries are known to exist as part of this log, the entry.clock is set to the highest known clock value in the log + 1.
-
 ## Signature Creation and Verification
 
 The **from** field must reference data that can be used to verify the validity of the entry. In most cases this is an [identity] with a public key.
@@ -147,6 +139,13 @@ The **from** field must reference data that can be used to verify the validity o
 The **sig** field must be the byte output of the DSA used to sign the **data** field with the identity referenced by the **from** field. The identity specifies the DSA and keys being used to create and verify the **sig** field.
 
 The **data** field must be the [dag-cbor](https://github.com/ipld/ipld/blob/master/specs/codecs/dag-cbor/spec.md) encoded entry data in its bytes format.
+
+## Logical Clock
+
+The **clock** field is used to add more richness to ordering the log. When creating new entries:
+
+ - If no other entries are known to exist as part of the log, the entry.clock is set to 0.
+ - If entries are known to exist as part of this log, the entry.clock is set to the highest known clock value in the log + 1.
 
 ## Reference Fields
 
