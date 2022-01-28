@@ -34,11 +34,11 @@ It's important to make sure the entry format is easy to transmit and verify. To 
 
 An IPFS-Log Entry is a data structure, encoded using dag-cbor [[spec](https://github.com/ipld/ipld/blob/master/specs/codecs/dag-cbor/spec.md)] and containing the following fields:
 
-- 0. **from** (CID)
+- 0. **auth** (CID)
   - The creator of the entry. This is a CID pointing to the identity used to sign the entry.
 
 - 1. **sig** (bytes)
-  - The signature from signing the data field or its hash with the identity referenced by the **from** field.
+  - The signature from signing the data field or its hash with the identity referenced by the **auth** field.
 
 - 2. **data** (bytes)
   - The encapsulated entry data for easy verification of the signature.
@@ -47,7 +47,7 @@ An IPFS-Log Entry is a data structure, encoded using dag-cbor [[spec](https://gi
 
 ```
   {
-    from: tag 42
+    auth: tag 42
     sig: type 2
     data: type 2
   }
@@ -89,7 +89,7 @@ An IPFS-Log Entry is a data structure, encoded using dag-cbor [[spec](https://gi
 - ###### signed entry
 ```
   {
-    from: CID(bafyreicl6ujc6ncfktctxxroxognfn7d2fqavvrryoc2lv6m4i6hpbkfti),
+    auth: CID(bafyreicl6ujc6ncfktctxxroxognfn7d2fqavvrryoc2lv6m4i6hpbkfti),
     sig: Uint8Array(70) [
        48,  68,   2,  32,  98, 244, 207, 200, 184, 243, 204,
         1,  40,  59,  37, 234, 179, 238, 178, 149,  97,  75,
@@ -134,9 +134,9 @@ Fields that can change in length include the clock, payload, and reference field
 
 ## Signature Creation and Verification
 
-The **from** field must reference data that can be used to verify the validity of the entry. In most cases this is an [identity] with a public key.
+The **auth** field must reference data that can be used to verify the validity of the entry. In most cases this is an [identity] with a public key.
 
-The **sig** field must be the byte output of the DSA used to sign the **data** field with the identity referenced by the **from** field. The identity specifies the DSA and keys being used to create and verify the **sig** field.
+The **sig** field must be the byte output of the DSA used to sign the **data** field with the identity referenced by the **auth** field. The identity specifies the DSA and keys being used to create and verify the **sig** field.
 
 The **data** field must be the [dag-cbor](https://github.com/ipld/ipld/blob/master/specs/codecs/dag-cbor/spec.md) encoded entry data in its bytes format.
 
