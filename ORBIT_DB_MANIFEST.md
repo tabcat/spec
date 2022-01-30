@@ -48,14 +48,14 @@ An OrbitDB manifest is a data structure, encoded using dag-cbor [[spec](https://
   - No *default* value
 
 
-- **access** (object)
+- **access** (map)
   - Contains the access type and configuration. Read more about [access modules]().
   - Must contain a `.type` property for the access modules type to be set
   - May contain other configuration for the access module
   - *default*: The default identity module type is `'/orbit-db/access/ipfs/1.0.0'`
 
 
-- **replicator** (object)
+- **replicator** (map)
   - Contains the replicator types and configuration. Read more about [replicator modules]().
   - Must contain a `.types` property for the replicator modules type to be set
   - May contain other configuration for the replicator modules
