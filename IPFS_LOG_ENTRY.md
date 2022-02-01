@@ -36,17 +36,11 @@ An IPFS-Log Entry is a data structure, encoded using dag-cbor [[spec](https://gi
 
 - **auth** (CID)
   - The creator of the entry. This is a CID pointing to the identity used to sign the entry.
-
-
 - **sig** (bytes)
   - The signature from signing the data field or its hash with the identity referenced by the **auth** field.
-
-
 - **data** (bytes)
   - The encapsulated entry data for easy verification of the signature.
-
-
-  ###### see cbor [major types](https://www.rfc-editor.org/rfc/rfc8949.html#section-3.1) and [tag 42](https://github.com/ipld/cid-cbor/)
+###### see cbor [major types](https://www.rfc-editor.org/rfc/rfc8949.html#section-3.1) and [tag 42](https://github.com/ipld/cid-cbor/)
 
 ```
   {
@@ -60,28 +54,16 @@ An IPFS-Log Entry is a data structure, encoded using dag-cbor [[spec](https://gi
 
 - **v** (uint64)
   - Denotes the version of the entry. In this case equal to `3` to denote version 3.
-
-
 - **tag** (bytes)
   - The tag field is used to associate the entry with a specific log/database.
-
-
 - **clock** (uint64)
   - The clock field is a logical timestamp for entries used as a part of ordering.
-
-
 - **payload** (any)
   - The payload field contains the data being appended to the log. When used by OrbitDB it is the database operation/s.
-
-
 - **next** (CID[])
   - The next field is an array of entry CID not yet referenced by other known entries in the log, also know as log heads. Used for ordering traversal.
-
-
 - **refs** (CID[])
   - The refs field is an array of entry CID, like the next field, but they reference entries farther back in the log. Used for replication, not used for ordering.
-
-
 ```
   {
     v: type 0
