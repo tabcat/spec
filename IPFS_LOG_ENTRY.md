@@ -1,4 +1,5 @@
 ![](https://img.shields.io/badge/status-wip-orange.svg?style=flat-square)
+
 # IPFS-Log Entry
 
 -----
@@ -7,7 +8,7 @@
 
 [IPFS-Log](https://github.com/orbitdb/ipfs-log) is a core part of [OrbitDB](https://orbitdb.org), it is used by the database as an operation log from which state is reduced. This log is built from entries added to the log. Entries are immutable and reference previous entries by [content-address](https://docs.ipfs.io/concepts/content-addressing) also called CID; creating causal and traversable links.
 
-Besides references to previous entries, entries include other information:
+Beside references to previous entries, entries include other information:
 
  - version
  - database tag
@@ -28,7 +29,7 @@ Besides references to previous entries, entries include other information:
 IPFS-Log entries are used to append updates in an immutable and conflict free way. Peers share them with each other and add them to their local replica.
 Before new entries can be added to the replica, their digital signature and writer identity need to be verified.
 
-It's important to make sure the entry format is easy to transmit and verify. To do this, the spec takes advantage of binary types in CBOR to save space; and structures the data so verifying the digital signature is straightforward.
+It's important to make sure the entry format is easy to transmit and verify. The spec takes advantage of binary types in CBOR to save space; and structures the data so verifying the digital signature is straightforward.
 
 ## Entry Format
 
@@ -36,11 +37,17 @@ An IPFS-Log Entry is a data structure, encoded using dag-cbor [[spec](https://gi
 
 - **auth** (CID)
   - The creator of the entry. This is a CID pointing to the identity used to sign the entry.
+
+
 - **sig** (bytes)
   - The signature from signing the data field or its hash with the identity referenced by the **auth** field.
+
+
 - **data** (bytes)
   - The encapsulated entry data for easy verification of the signature.
-###### see cbor [major types](https://www.rfc-editor.org/rfc/rfc8949.html#section-3.1) and [tag 42](https://github.com/ipld/cid-cbor/)
+
+
+  ###### see cbor [major types](https://www.rfc-editor.org/rfc/rfc8949.html#section-3.1) and [tag 42](https://github.com/ipld/cid-cbor/)
 
 ```
   {
@@ -54,16 +61,28 @@ An IPFS-Log Entry is a data structure, encoded using dag-cbor [[spec](https://gi
 
 - **v** (uint64)
   - Denotes the version of the entry. In this case equal to `3` to denote version 3.
+
+
 - **tag** (bytes)
   - The tag field is used to associate the entry with a specific log/database.
+
+
 - **clock** (uint64)
   - The clock field is a logical timestamp for entries used as a part of ordering.
+
+
 - **payload** (any)
-  - The payload field contains the data being appended to the log. When used by OrbitDB it is the database operation/s.
+  - The payload field contains the data being appended to the log. An example would be operations being appended to the database.
+
+
 - **next** (CID[])
   - The next field is an array of entry CID not yet referenced by other known entries in the log, also know as log heads. Used for ordering traversal.
+
+
 - **refs** (CID[])
   - The refs field is an array of entry CID, like the next field, but they reference entries farther back in the log. Used for replication, not used for ordering.
+
+
 ```
   {
     v: type 0
@@ -105,12 +124,11 @@ An IPFS-Log Entry is a data structure, encoded using dag-cbor [[spec](https://gi
 ```
   {
     v: 3,
-    tag: Uint8Array(36) [
-        1, 113,  18,  32,  75, 245,  18,  47,
-       52,  69,  84, 197,  59, 222,  46, 187,
-      140, 210, 183, 227, 209,  96,  10, 214,
-       49, 195, 133, 165, 215, 204, 226,  60,
-      119, 133,  69, 154
+    tag: Uint8Array(32) [
+       75, 245,  18,  47,  52,  69,  84, 197,
+       59, 222,  46, 187, 140, 210, 183, 227,
+      209,  96,  10, 214,  49, 195, 133, 165,
+      215, 204, 226,  60, 119, 133,  69, 154
     ],
     clock: 0,
     payload: null,
@@ -136,7 +154,7 @@ The **data** field must be the [dag-cbor](https://github.com/ipld/ipld/blob/mast
 The **clock** field is used to add more richness to ordering the log. When creating new entries:
 
  - If no other entries are known to exist as part of the log, the entry.clock is set to 0.
- - If entries are known to exist as part of this log, the entry.clock is set to the highest known clock value in the log + 1.
+ - If entries are known to exist as part of this log, the entry.clock is set to the highest known clock value + 1.
 
 ## Reference Fields
 
