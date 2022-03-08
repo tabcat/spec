@@ -19,6 +19,7 @@ Beside references to previous entries, entries include other information:
 # Table of Contents
 
 - [Introduction](#introduction)
+- [Formats](#Formats)
 - [Interface](#interface)
 - [Validity](#validity)
 - [Reference Fields](#reference-fields)
@@ -28,6 +29,12 @@ Beside references to previous entries, entries include other information:
 
 Entries are used to append updates in an immutable and conflict free way. Peers share them with each other and add them to their local replica.
 Before new entries can be checked for access and added to the replica; their tag, digital signature, and writer identity need to be verified.
+
+## Formats
+
+> List of spec'd entry formats
+
+- [ipfs-log](./ipfs-log)
 
 ## Interface
 

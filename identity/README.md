@@ -11,12 +11,19 @@ Identities are use for verification and access control of database entries. They
 # Table of Contents
 
 - [Introduction](#introduction)
+- [Formats](#Formats)
 - [Interface](#interface)
 - [Validity](#validity)
 
 ## Introduction
 
-Identities are used to verify entry signatures and
+Identities are used to verify entry signatures and contain a key for access control. Every entry will have or contain a reference to an identity.
+
+## Formats
+
+> List of spec'd identity formats
+
+- [orbitdb](./orbitdb)
 
 ## Interface
 
