@@ -43,33 +43,38 @@ An OrbitDB manifest is a data structure, encoded using dag-cbor [[spec](https://
 
 
 - **type** (utf8)
-  - The type of the database to be used. Read more about [database stores]().
+  - The type of the database to be used. Read more about [database stores](./store)
   - A string key to find the correct store module
   - No *default* value
 
 
 - **access** (map)
-  - Contains the access type and configuration. Read more about [access modules]().
+  - Contains the access type and configuration. Read more about [access modules](./access)
   - Must contain a `.type` property for the access modules type to be set
   - May contain other configuration for the access module
-  - *default*: The default identity module type is `'/orbit-db/access/ipfs/1.0.0'`
+  - *default*: The default access module type is `'/orbitdb/access/ipfs/1.0.0'`
 
 
 - **replicator** (map)
-  - Contains the replicator types and configuration. Read more about [replicator modules]().
+  - Contains the replicator types and configuration. Read more about [replicator modules](./replicator).
   - Must contain a `.types` property for the replicator modules type to be set
   - May contain other configuration for the replicator modules
-  - *default*: The default replicator module types are `['/orbit-db/replicator/ipfs-pubsub-heads-exchange/1.0.0']`
+  - *default*: The default replicator module types are `['/orbitdb/replicator/pubsub-heads-exchange/1.0.0']`
 
 
 - **entry** (utf8)
-  - The entry type to be used. Read more about [entry formats]().
+  - The entry type to be used. Read more about [entry formats](./entry).
   - *default*: The default entry format type is `'/ipfs-log/entry/3.0.0'`
 
 
 - **identity** (utf8)
-  - The identity type to be used. Read more about [identity formats]().
-  - *default*: The default identity format type is `'/orbit-db/identity/1.0.0'`
+  - The identity type to be used. Read more about [identity formats](./identity).
+  - *default*: The default identity format type is `'/orbitdb/identity/1.0.0'`
+
+
+- **meta** (any) [optional]
+  - An optional user-space field for including any information they want to keep immutable and associated with the database.
+  - *default*: If no meta is supplied, then no meta field exists in the manifest and is treated as `null`.
 
 
 - **tag** (bytes) [optional]
@@ -78,13 +83,9 @@ An OrbitDB manifest is a data structure, encoded using dag-cbor [[spec](https://
   - *default*: If no tag is supplied, then no tag field exists in the manifest. In this case the database tag must be treated as the SHA2-256 digest of the dag-cbor encoded manifest.
 
 
-- **meta** (any) [optional]
-  - An optional user-space field for including any information they want to keep immutable and associated with the database.
-  - *default*: If no value is supplied for the meta field, then no meta field exists in the manifest. In this case the field must be treated as `null`.
 
+###### see cbor [encoding specification](https://www.rfc-editor.org/rfc/rfc8949.html#name-specification-of-the-cbor-e) and [tag 42](https://github.com/ipld/cid-cbor/)
 
-
-  ###### see cbor [major types](https://www.rfc-editor.org/rfc/rfc8949.html#section-3.1) and [tag 42](https://github.com/ipld/cid-cbor/)
 ```
   {
     version: type 0
@@ -98,8 +99,8 @@ An OrbitDB manifest is a data structure, encoded using dag-cbor [[spec](https://
     }
     entry: type 3
     identity: type 3
+    meta?: any
     tag?: type 2
-    meta?: type 0-5 | tag 42
   }
 ```
 
@@ -109,18 +110,18 @@ An OrbitDB manifest is a data structure, encoded using dag-cbor [[spec](https://
   {
     version: 1,
     name: 'example',
-    type: '/orbit-db/kvstore/1.0.0',
+    type: '/orbitdb/kvstore/1.0.0',
     access: {
-      type: '/orbit-db/access/ipfs/1.0.0',
+      type: '/orbitdb/access/ipfs/1.0.0',
       write: [
         CID(bafyreicl6ujc6ncfktctxxroxognfn7d2fqavvrryoc2lv6m4i6hpbkfti)
       ]
     },
     replicator: {
-      types: ['/orbit-db/replicator/ipfs-pubsub-heads-exchange/1.0.0']
+      types: ['/orbitdb/replicator/pubsub-heads-exchange/1.0.0']
     },
-    entry: '/ipfs-log/entry/3.0.0,
-    identity: '/orbit-db/identity/2.0.0'
+    entry: '/ipfs-log/entry/3.0.0',
+    identity: '/orbitdb/identity/2.0.0'
   }
 ```
 
@@ -130,19 +131,19 @@ An OrbitDB manifest is a data structure, encoded using dag-cbor [[spec](https://
 
 #### Address String Format
 
-  `/orbit-db/<manifest CID>`
+  `/orbitdb/<manifest CID>`
 
   This is the manifest address string format. The version and encoding for the CID are not specified. Here are some examples of valid addresses:
 
-  - `/orbit-db/QmWDUfC4zcWJGgc9UHn1X3qQ5KZqBv4KCiCtjnpMmBT8JC`
-  - `/orbit-db/zdpuArEpCPwqpgQVMYrFSDQKhHLq5L6Es8HQkhWfhrad5oYdK`
-  - `/orbit-db/bafybeidpga2xwiiseib3tcsp33wodu3itunwj2su624yygdx6av3s4f5f4`
+  - `/orbitdb/QmWDUfC4zcWJGgc9UHn1X3qQ5KZqBv4KCiCtjnpMmBT8JC`
+  - `/orbitdb/zdpuArEpCPwqpgQVMYrFSDQKhHLq5L6Es8HQkhWfhrad5oYdK`
+  - `/orbitdb/bafybeidpga2xwiiseib3tcsp33wodu3itunwj2su624yygdx6av3s4f5f4`
 
 #### Address Binary Format
 
-  `<orbit-db multicodec><manifest CID>`
+  `<orbitdb multicodec><manifest CID>`
 
-  This is the manifest address binary format. The multicodec code for orbit-db is `0xdb`. This byte must be prefixed to the manifest CID for it to be valid. Here are some examples using the same CID from the string section:
+  This is the manifest address binary format. The multicodec code for orbitdb is `0xdb`. This byte must be prefixed to the manifest CID for it to be valid. Here are some examples using the same CID from the string section:
 
   - `0xdb1220750710ddc61a99b8604fc77e4067b53c24d0488cd28fda4cb344ffee95a73191`
   - `0xdb01711220566d493416aee3a6585402934b8544468b5d040935cb1dcb43830057966a0a46`

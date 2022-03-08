@@ -6,7 +6,7 @@
 
 **Abstract**
 
-OrbitDB Identities are use for verification and access control of database entries. They often contain keys used to digitally sign data and serve as a composable way to distribute access to multiple devices without sharing any private data.
+OrbitDB Identities are use for verification and access control of database entries. They use secp256k1 public keys for digitally signing entries and composable access control.
 
 # Table of Contents
 
@@ -25,10 +25,10 @@ The second public key is used to sign the database entries. If both the entry si
 
 An OrbitDB Identity is a data structure, encoded using dag-cbor [[spec](https://github.com/ipld/ipld/blob/master/specs/codecs/dag-cbor/spec.md)] and containing the following fields:
 
-- **root** (bytes)
+- **id** (bytes)
   - The identity root public key.
   - It must be a compressed* secp256k1 public key.
-  - Used to for access control.
+  - Used for access control.
   - Key used to sign key in `pub` field.
 
 
@@ -36,22 +36,22 @@ An OrbitDB Identity is a data structure, encoded using dag-cbor [[spec](https://
   - The identity public key.
   - It must be a compressed* secp256k1 public key.
   - Used to sign database entries.
-  - May be the same key used in the `root` field.
+  - May be the same key used in the `id` field.
 
 
 - **sig** (bytes)
-  - The signature of `root` field public key signing `pub` field public key bytes.
+  - The signature of `id` field public key signing `pub` field public key bytes.
   - It must be an ECDSA signature.
-  - Verifies that the `pub` field public key belongs to the `root` field public key.
+  - Verifies that the `pub` field public key belongs to the `id` field public key.
 
 
-###### see cbor [major types](https://www.rfc-editor.org/rfc/rfc8949.html#section-3.1) and [tag 42](https://github.com/ipld/cid-cbor/)
+###### see cbor [encoding specification](https://www.rfc-editor.org/rfc/rfc8949.html#name-specification-of-the-cbor-e)
 
 ```
   {
-    auth: type 2
+    id: type 2
+    pub: type 2
     sig: type 2
-    data: type 2
   }
 ```
 
