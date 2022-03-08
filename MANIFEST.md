@@ -69,7 +69,7 @@ An OrbitDB manifest is a data structure, encoded using dag-cbor [[spec](https://
 
 - **identity** (utf8)
   - The identity type to be used. Read more about [identity formats](./identity).
-  - *default*: The default identity format type is `'/orbitdb/identity/1.0.0'`
+  - *default*: The default identity format type is `'/orbitdb/identity/2.0.0'`
 
 
 - **meta** (any) [optional]
