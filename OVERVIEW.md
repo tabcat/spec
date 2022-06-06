@@ -34,7 +34,7 @@ The [entry](./entry) is a CRDT with a payload. Each entry is a DAG node with cau
 
 The [identity](./identity) contains a signed public key. Each entry has an identity associated with it for verification of the entry signature and access control.
 
-<img src="./.assets/replica_diagram.png" width="750"/>
+<img src="./.assets/replica_diagram.png" width="450"/>
 
 A database replica is made up of a manifest, and sets of entry and identity.
 
@@ -48,7 +48,7 @@ The database process the replica by a few different components:
 
  - [replicator](./replicator) handles syncing the replica across participating devices.
 
-<img src="./.assets/database_diagram.png" height="750"/>
+<img src="./.assets/database_diagram.png" height="450"/>
 
 ## The CRDTs
 
