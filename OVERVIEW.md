@@ -52,11 +52,11 @@ The database process the replica by a few different components:
 
 ## The CRDTs
 
-The CRDTs being used are best described as [Merkle-CRDTs](https://research.protocol.ai/publications/merkle-crdts-merkle-dags-meet-crdts/). That is the combination of CRDTs with Merkle-DAGs. This gives some nice properties to the CRDTs, two being causal links and deduplication. Since the causal links are part of the data and any entry can be merged without conflict, the network does not need to worry about delivery order.
+The CRDTs being used are best described as [Merkle-CRDTs](https://research.protocol.ai/publications/merkle-crdts-merkle-dags-meet-crdts/). That is the combination of CRDTs with Merkle-DAGs. This gives some nice properties to the CRDTs, two being causal links and deduplication. The Merkle-DAGs are also used as a storage/transport layer, this adds a degree of separation from the network being used for replication.
 
 ## Fundamental Limits
 
-Do not try to build a cryptocurrency with OrbitDB (unless you really, really want to). There are somethings you cannot do with OrbitDB and similar peer-to-peer databases.These limits are explained in [Byzantine Eventual Consistency and the Fundamental Limits of Peer-to-Peer Databases](https://martin.kleppmann.com/2021/10/07/consensusdays.html). With OrbitDB we allow concurrent and async updates to occur and be merged. This is great for use in some applications, but for others with invariants like *no negative numbers* this isn't doable.
+Do not try to build a cryptocurrency with OrbitDB (unless you really, really want to). There are some things you cannot do with OrbitDB and similar peer-to-peer databases. These limits are explained in [Byzantine Eventual Consistency and the Fundamental Limits of Peer-to-Peer Databases](https://martin.kleppmann.com/2021/10/07/consensusdays.html). With OrbitDB we allow concurrent and async updates to occur and be merged. This is great for use in some applications, but for others with invariants like *no negative numbers* this isn't doable.
 
 ## Design in Use
 
