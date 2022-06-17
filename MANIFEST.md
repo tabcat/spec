@@ -55,13 +55,6 @@ An OrbitDB manifest is a data structure, encoded using dag-cbor [[spec](https://
   - *default*: The default access module type is `'/orbitdb/access/ipfs/1.0.0'`
 
 
-- **replicator** (map)
-  - Contains the replicator types and configuration. Read more about [replicator modules](./replicator).
-  - Must contain a `.types` property for the replicator modules type to be set
-  - May contain other configuration for the replicator modules
-  - *default*: The default replicator module types are `['/orbitdb/replicator/pubsub-heads-exchange/1.0.0']`
-
-
 - **entry** (utf8)
   - The entry type to be used. Read more about [entry formats](./entry).
   - *default*: The default entry format type is `'/ipfs-log/entry/3.0.0'`
@@ -94,9 +87,6 @@ An OrbitDB manifest is a data structure, encoded using dag-cbor [[spec](https://
     access: {
       type: type 3
     }
-    replicator: {
-      types: type 5<type3>
-    }
     entry: type 3
     identity: type 3
     meta?: any
@@ -116,9 +106,6 @@ An OrbitDB manifest is a data structure, encoded using dag-cbor [[spec](https://
       write: [
         CID(bafyreicl6ujc6ncfktctxxroxognfn7d2fqavvrryoc2lv6m4i6hpbkfti)
       ]
-    },
-    replicator: {
-      types: ['/orbitdb/replicator/pubsub-heads-exchange/1.0.0']
     },
     entry: '/ipfs-log/entry/3.0.0',
     identity: '/orbitdb/identity/2.0.0'

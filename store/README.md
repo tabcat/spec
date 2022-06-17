@@ -46,6 +46,6 @@ Operations are used to update database states. They are added to entry payloads 
 
 ## Index
 
-The Index defines the structure of the database state. Indexes read the entry log from the replica to derive the index state.
+The Index defines the structure of the database state. Indexes read the entry log from the replica to derive the index state. It reads the entry log
 
 TODO: example definition for reducing an index from operations
