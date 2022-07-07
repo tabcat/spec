@@ -4,19 +4,19 @@
 
 ## Index
 
-- [Protocol Overview]('./OVERVIEW.md')
+- [Protocol Overview](./OVERVIEW.md)
   - [Introduction]()
   - []
-- [Manifest]('./manifest')
-- [Store]('./store')
+- [Manifest](./manifest)
+- [Store](./store)
   - [Feed]():
   - [Kvstore](): key-value database
   - [Counter]():
-- [Access]('./access')
-- [Replicator]('./replicator')
-- [Entry]('./entry')
-- [Identity]('./identity')
-- [Public Interfaces]('./PUBLIC_INTERFACES.md')
+- [Access](./access)
+- [Replicator](./replicator)
+- [Entry](./entry)
+- [Identity](./identity)
+- [Public Interfaces](./PUBLIC_INTERFACES.md)
   - Programmatic
     - [Javascript]()
     - [Go]()
